@@ -1,0 +1,56 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <time.h> 	//Ne pas oublier d'inclure le fichier time.h
+#include "Prototypes.h"
+
+int main(void)
+{
+    pid_t pid_fils;
+    char *arguments[] = { "static", NULL };
+    char *arguments[] = { "dynamic", NULL };
+    char *arguments[] = { "interactif", NULL };
+    char *arguments[] = { "log", NULL };
+    int TypeDeFond = 0;
+
+    if(argv[0]=="stat")
+	{
+		execcv("./historique/log");
+	}
+	else
+    {
+        do {
+        pid_fils = fork();
+        } while ((pid_fils == -1) && (errno == EAGAIN));
+
+        if (pid_fils == -1) {
+            perror("fork");
+        }
+        else if (pid_fils == 0) {
+            switch (TypeDeFond)
+            {
+            case 0:
+                printf("premiere image\n");
+                execv("./static", arguments);
+            case 1:
+                printf("deuxieme image\n");
+                execv("./dynamic", arguments);
+            case 2:
+                printf("troisieme image\n");
+                execv("./interactif", arguments);
+            }
+        }
+        else {
+        printf("Je suis le père\n");
+
+        if (wait(NULL) == -1) {
+            perror("wait :");
+            }
+        }
+    }
+
+    return EXIT_SUCCESS;
+}
