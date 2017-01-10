@@ -10,42 +10,45 @@
 
 int main (int argc, char *argv[])
 {
+	int TypeDeFond;
+
 	if(argv[0]=="stat")
 	{
 		system("./historique/log");
 	}
 	else
 	{
-		int TypeDeFond;
 		TypeDeFond=0; //rand()%3; //renvoi une valeur pseudo-aléatoire (0, 1 ou 2), correspondant au type d'ecrande veille a exec.
+    		pid_t pid_fils;
+
+	    	do {
+			pid_fils = fork();
+		} while ((pid_fils == -1) && (errno == EAGAIN));
+
+	    	if (pid_fils == -1) {
+			perror("fork");
+		}
+	    	else if (TypeDeFond == 0) {
+			printf("test1\n");
+			system("./static");
+	    	}
+	   	else if (TypeDeFond == 1) {
+			printf("test2");
+			system("./dynamic");
+	    	}
+	    	else if (TypeDeFond == 2) {
+			printf("test3");
+			system("./interractif");
+	   	}
+	    	else {
+			printf("error, program down \n");
+
+			if (wait(NULL) == -1) {
+		    		perror("wait :");
+			}
+	    	}
+		quit();
+		printf("Le processus ne c'est pas arrêté"); //vérifie l'arrêt du processus
 	}
-    pid_t pid_fils;
-
-    do {
-        pid_fils = fork();
-        } while ((pid_fils == -1) && (errno == EAGAIN));
-
-    if (pid_fils == -1) {
-        perror("fork");
-        }
-    else if (pid_fils == 0 && TypeDeFond = 0) {
-        system("./static");
-    }
-    else if (pid_fils == 0 && TypeDeFond = 1) {
-        system("./dynamic");
-    }
-    else if (pid_fils == 0 && TypeDeFond = 2) {
-        system("./interractif");
-    }
-    else {
-	printf("Je suis le père");
-
-        if (wait(NULL) == -1) {
-            perror("wait :");
-        }
-    }
-  
-	quit();
-	printf("Le processus ne c'est pas arrêté"); //vérifie l'arrêt du processus
-	return EXIT_SUCCESS;
+	return 0;
 }
