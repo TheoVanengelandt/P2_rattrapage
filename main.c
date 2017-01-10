@@ -4,12 +4,15 @@
 #include <errno.h>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include <time.h> 	//Ne pas oublier d'inclure le fichier time.h
+#include "Prototypes.h"
+
 
 int main (int argc, char *argv[])
 {
 	if(argv[0]=="stat")
 	{
-		system("./log");
+		system("./historique/log");
 	}
 	else
 	{
@@ -19,7 +22,7 @@ int main (int argc, char *argv[])
     pid_t pid_fils;
 
     do {
-        pid_fils = fork();v
+        pid_fils = fork();
         } while ((pid_fils == -1) && (errno == EAGAIN));
 
     if (pid_fils == -1) {
@@ -41,6 +44,7 @@ int main (int argc, char *argv[])
             perror("wait :");
         }
     }
+  
 	quit();
 	printf("Le processus ne c'est pas arrêté"); //vérifie l'arrêt du processus
 	return EXIT_SUCCESS;
