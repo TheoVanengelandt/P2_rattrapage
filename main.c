@@ -1,11 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h> 	//Ne pas oublier d'inclure le fichier time.h
+#include "Prototypes.h"
 
 int maint (int argc, char *argv[])
 {
 	if(argv[0]=="stat")
 	{
-		system("./log");
+		system("./historique/log");
 	}
 	else
 	{
@@ -15,7 +17,7 @@ int maint (int argc, char *argv[])
 		switch(TypeDeFond)
 		{
 			case 0:
-				system("./static");
+				system("./StaticServ/static");
 				break;
 			case 1:
 				//exec program static
