@@ -34,7 +34,6 @@ int main()
     }
 
     affecter(&tab, nomFichier);
-
     Affichetableau(&tab);
     return 0;
 }

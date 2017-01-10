@@ -12,10 +12,10 @@ void affecter(Ttab** tab, char* nomDuFichier)
 
     char chaine[TAILLE_MAX] = "";
     char chaineAnex[TAILLE_MAX] = "";
-    const char t='#';//Constantes permettant le filtrage des caractère du pbm
-    const char m='P';//Constantes permettant le filtrage des caractère du pbm
+    const char t='#'; //Constantes permettant le filtrage des caractère du pbm
+    const char m='P'; //Constantes permettant le filtrage des caractère du pbm
 
-    int ent,y=0;    //valeur sortie du pbm et ajouté au tableau
+    int ent,y =0;    //valeur sortie du pbm et ajouté au tableau
     int tb[2] = {0};
     int i=0, j=0, l=0, c=0, repetition =0;
 
@@ -24,7 +24,6 @@ void affecter(Ttab** tab, char* nomDuFichier)
 
 
     fichier = fopen(nomDuFichier, "r");
-
     initialisationStruct(tab);
 
     if (fichier != NULL)

@@ -25,8 +25,6 @@ void Affichetableau(Ttab** tab)
     //permet de verifier les valeurs obtenues
     //printf("\n x = %d, y = %d, nbrLigne= %d, nbrColonnes = %d  \n", debutX, debutY, nbrLignes, nbrColonnes);
 
-
-
 	for(int j=0; j<w.ws_row; j++)
 	{
 		for(int i=0; i<(nbrColonnes+debutX); i++)
@@ -46,9 +44,15 @@ void Affichetableau(Ttab** tab)
         	}
         	printf("\n");
     	}
-	while()
+	int entreeClavier;
+	while(1)
 	{
-		printf("condition de fermeture");
+		entreeClavier=getchar();
+		if(entreeClavier!=0)
+		{
+			system("clear");
+			return EXIT_SUCCES;
+		}
 	}
     	printf("\n");
 }
