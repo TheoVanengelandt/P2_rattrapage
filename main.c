@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -12,7 +13,7 @@ int main (int argc, char *argv[])
 {
 	int TypeDeFond;
 
-	if(argv[0]=="stat")
+	if(argc >= 2 && argv[1]== "-stat")
 	{
 		system("./historique/log");
 	}
@@ -20,35 +21,44 @@ int main (int argc, char *argv[])
 	{
 		TypeDeFond=0; //rand()%3; //renvoi une valeur pseudo-aléatoire (0, 1 ou 2), correspondant au type d'ecrande veille a exec.
     		pid_t pid_fils;
+		char *ParamList[] = {"test", NULL};
 
-	    	do {
-			pid_fils = fork();
-		} while ((pid_fils == -1) && (errno == EAGAIN));
+	    	pid_fils = fork();
+		//printf("pid = %d\n\n", pid_fils);
 
-	    	if (pid_fils == -1) {
-			perror("fork");
+		if (pid_fils == -1)
+		{
+			printf("Erreur de création du nouveau processus!");
+			quit();
 		}
-	    	else if (TypeDeFond == 0) {
-			printf("test1\n");
-			system("./static");
-	    	}
-	   	else if (TypeDeFond == 1) {
-			printf("test2");
-			system("./dynamic");
-	    	}
-	    	else if (TypeDeFond == 2) {
-			printf("test3");
-			system("./interractif");
-	   	}
-	    	else {
-			printf("error, program down \n");
+		else if (pid_fils ==  0)	// child process
+		{
+			//printf("processus fils\n");
 
-			if (wait(NULL) == -1) {
-		    		perror("wait :");
-			}
-	    	}
-		quit();
+		    	if (TypeDeFond == 0)
+			{
+				//printf("Program static\n");
+				execv("/home/theo/Bureau/P2_rattrapage-master/test", ParamList);
+		    	}
+		   	else if (TypeDeFond == 1)
+			{
+				printf("test2");
+				system("./dynamic");
+		    	}
+		    	else
+			{
+				printf("test3");
+				system("./interractif");
+	   		}
+		}
+	    	else	// parent process
+		{
+			//waitpid(pid_fils, NULL, 0);
+			wait(NULL);
+			printf("le programme c'est finis correctement\n ^^\n");
+		}
+
+	    	quit();
 		printf("Le processus ne c'est pas arrêté"); //vérifie l'arrêt du processus
 	}
-	return 0;
 }
